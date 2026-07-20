@@ -1,0 +1,31 @@
+# Local datasets are linked from Kaggle and must not be committed.
+data/raw/*
+data/sample/*
+!data/raw/.gitkeep
+!data/sample/.gitkeep
+!data/README.md
+
+# Generated analysis output and logs.
+results/*
+!results/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Local report drafts and generated document artifacts.
+outputs/
+
+# Python and notebook artifacts.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Local configuration and credentials.
+.env
+*.pem
+*.key
+
+# Temporary document-rendering files.
+work/
