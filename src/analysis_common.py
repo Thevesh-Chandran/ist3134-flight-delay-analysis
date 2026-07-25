@@ -8,9 +8,6 @@ import time
 from pathlib import Path
 from typing import Iterable
 
-import psutil
-
-
 EXPECTED_COLUMNS = [
     "year",
     "month",
@@ -144,6 +141,8 @@ class PeakMemorySampler:
     """Sample this process's RSS while a Pandas run is active."""
 
     def __init__(self, interval_seconds: float = 0.05) -> None:
+        import psutil
+
         self.interval_seconds = interval_seconds
         self.peak_bytes = 0
         self._stop = threading.Event()
@@ -172,4 +171,3 @@ def ensure_output_directory(path: str) -> Path:
     output = Path(path)
     output.mkdir(parents=True, exist_ok=True)
     return output
-
