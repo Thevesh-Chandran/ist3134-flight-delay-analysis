@@ -44,6 +44,7 @@ The dataset is not stored in GitHub. Download it from Kaggle and follow
 |-- results/               Generated analytical outputs (ignored by Git)
 |-- src/
 |   |-- analysis_common.py Shared schema and definitions
+|   |-- create_result_charts.py Report-ready figure generation
 |   |-- pandas_analysis.py Single-machine implementation
 |   |-- pyspark_analysis.py Distributed Spark implementation
 |   `-- compare_outputs.py Cross-engine validation
@@ -108,9 +109,35 @@ Both implementations produce equivalent results for:
 The PySpark job writes each table as a Spark CSV directory. The Pandas job
 writes one CSV file per table.
 
-## AWS target architecture
+## Verified AWS execution
 
-The full CSV will be stored in Amazon S3. PySpark will run on Amazon EMR and
-write aggregate outputs back to S3. The comparison implementation will run
-with Pandas on one Amazon EC2 instance using the same S3 input and analytical
-definitions. AWS account identifiers and credentials must never be committed.
+The full CSV was stored in Amazon S3. PySpark ran on Amazon EMR using one
+`m5.xlarge` primary node and two `m5.xlarge` core nodes. Pandas ran on one
+`r5.large` EC2 instance. Both implementations processed the same full file and
+all eight analytical output tables matched.
+
+| Engine | Run 1 | Run 2 | Run 3 | Median |
+|---|---:|---:|---:|---:|
+| PySpark on EMR | 96.31 s | 98.07 s | 99.24 s | 98.07 s |
+| Pandas on EC2 | 42.59 s | 41.06 s | 41.38 s | 41.38 s |
+
+Pandas was faster for this 1.31 GB dataset, but used approximately 8.26 GB of
+peak process memory and failed on the smaller `m5.large` configuration. The
+complete execution evidence is recorded in
+[docs/aws_execution_record.md](docs/aws_execution_record.md).
+
+## Report figures and writing guide
+
+After placing the downloaded AWS output folders under `results/aws/outputs`,
+generate the six report figures with:
+
+```powershell
+python src/create_result_charts.py
+```
+
+The figures are saved under [reports/figures/results](reports/figures/results).
+Copy-ready results, validation and comparison guidance is available in
+[docs/results_and_comparison_guide.md](docs/results_and_comparison_guide.md).
+
+AWS account identifiers, credentials, the full dataset and raw AWS logs must
+never be committed.
