@@ -14,7 +14,7 @@ domestic flight records from 2024.
 
 ## Implementations
 
-- **Main big-data solution:** PySpark DataFrames and Spark SQL on Amazon EMR
+- **Main big-data solution:** PySpark DataFrames on Amazon EMR
 - **Comparison solution:** Pandas on a single Amazon EC2 instance
 - **Cloud storage:** Amazon S3
 
