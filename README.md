@@ -3,151 +3,97 @@
 IST3134 group assignment analysing more than seven million United States
 domestic flight records from 2024.
 
-## Research questions
+## Dataset
 
-1. Which airlines have the highest flight-delay rates?
-2. Which origin airports have the highest delay rates?
-3. During which months, days and departure hours are delays most common?
-4. What are the major recorded causes of flight delays?
-5. Which domestic routes have the longest average delays?
-6. How does PySpark compare with Pandas when processing millions of records?
+[Flight Data 2024 on Kaggle](https://www.kaggle.com/datasets/hrishitpatil/flight-data-2024)
 
-## Analytical definition
+- 7,079,081 flight records
+- 35 columns
+- 1,309,010,752-byte CSV
+- United States domestic flights from January to December 2024
+
+## Implementations
+
+- **Main big-data solution:** PySpark DataFrames and Spark SQL on Amazon EMR
+- **Comparison solution:** Pandas on a single Amazon EC2 instance
+- **Cloud storage:** Amazon S3
 
 A completed flight has `cancelled = 0` and `diverted = 0`. A completed flight
-is delayed when `arr_delay >= 15`.
+is classified as delayed when `arr_delay >= 15`.
 
 ```text
 Delay rate (%) = delayed completed flights / completed flights * 100
 ```
 
-## Dataset
-
-- Source: [Flight Data 2024 on Kaggle](https://www.kaggle.com/datasets/hrishitpatil/flight-data-2024)
-- Full file: 7,079,081 records, 35 columns, 1,309,010,752 bytes
-- Sample file: 10,000 records with the same schema
-
-The dataset is not stored in GitHub. Download it from Kaggle and follow
-[data/README.md](data/README.md).
-
-## Assignment files provided
-
-The repository provides the materials requested in the assignment:
-
-- [src/pyspark_analysis.py](src/pyspark_analysis.py): main Spark implementation;
-- [src/pandas_analysis.py](src/pandas_analysis.py): non-big-data comparison;
-- [src/analysis_common.py](src/analysis_common.py): shared schema and analytical definitions;
-- [src/compare_outputs.py](src/compare_outputs.py): PySpark–Pandas output validation;
-- [tests/test_pandas_analysis.py](tests/test_pandas_analysis.py): automated logic tests;
-- [requirements-pyspark.txt](requirements-pyspark.txt) and
-  [requirements-pandas.txt](requirements-pandas.txt): required packages; and
-- the Kaggle dataset link and execution instructions in this README.
-
-## Project structure
+## Repository structure
 
 ```text
 .
-|-- aws/                   AWS deployment notes and scripts
-|-- data/                  Local data locations (CSV files ignored by Git)
-|-- docs/                  Project documentation
-|-- reports/
-|   |-- figures/           Final report charts
-|   `-- tables/            Final report tables
-|-- results/               Generated analytical outputs (ignored by Git)
-|-- requirements-*.txt     PySpark and Pandas dependencies
-|-- src/
-|   |-- analysis_common.py Shared schema and definitions
-|   |-- create_result_charts.py Report-ready figure generation
-|   |-- pandas_analysis.py Single-machine implementation
-|   |-- pyspark_analysis.py Distributed Spark implementation
-|   `-- compare_outputs.py Cross-engine validation
-`-- tests/                 Automated tests
+|-- code/
+|   |-- analysis_common.py
+|   |-- compare_outputs.py
+|   |-- create_result_charts.py
+|   |-- pandas_analysis.py
+|   |-- pyspark_analysis.py
+|   `-- test_pandas_analysis.py
+|-- graphs/
+|   |-- 01_airline_delay_rates.png
+|   |-- 02_origin_airport_delay_rates.png
+|   |-- 03_temporal_delay_patterns.png
+|   |-- 04_recorded_delay_causes.png
+|   |-- 05_longest_average_route_delays.png
+|   `-- 06_runtime_comparison.png
+|-- requirements-pandas.txt
+|-- requirements-pyspark.txt
+`-- README.md
 ```
 
-## Local sample run
-
-Install the Pandas dependencies:
+## Run the Pandas implementation
 
 ```powershell
 python -m pip install -r requirements-pandas.txt
+
+python code/pandas_analysis.py `
+  --input "<path-to-flight_data_2024.csv>" `
+  --output "_local/results/pandas" `
+  --minimum-route-flights 100
 ```
 
-Run the Pandas implementation:
+## Run the PySpark implementation
 
-```powershell
-python src/pandas_analysis.py `
-  --input "C:\Users\theve\Downloads\flight_data_2024_sample.csv" `
-  --output "results\sample\pandas" `
-  --minimum-route-flights 1
-```
-
-For PySpark, use Python 3.11 or 3.12 with Java installed:
+Use Python 3.11 or 3.12 with Java and Spark installed.
 
 ```powershell
 python -m pip install -r requirements-pyspark.txt
-spark-submit src/pyspark_analysis.py `
-  --input "C:\Users\theve\Downloads\flight_data_2024_sample.csv" `
-  --output "results/sample/pyspark" `
-  --minimum-route-flights 1
+
+spark-submit code/pyspark_analysis.py `
+  --input "<path-or-s3-uri-to-flight_data_2024.csv>" `
+  --output "<output-path-or-s3-prefix>" `
+  --minimum-route-flights 100
 ```
 
-The threshold of 1 is used only to exercise the route logic on the small
-sample. Use the report's threshold of 100 for every full-dataset run.
-
-Validate the two output sets:
+## Validate equivalent outputs
 
 ```powershell
-python src/compare_outputs.py `
-  --pandas-output "results\sample\pandas" `
-  --spark-output "results\sample\pyspark"
+python code/compare_outputs.py `
+  --pandas-output "<pandas-output-directory>" `
+  --spark-output "<pyspark-output-directory>"
 ```
 
-Run the automated logic tests:
+## Run the automated tests
 
 ```powershell
-python -m unittest discover -s tests -v
+python -m unittest discover -s code -p "test_*.py" -v
 ```
 
-## Generated outputs
+## Verified full-data results
 
-Both implementations produce equivalent results for:
-
-- dataset and data-quality summary;
-- airline and origin-airport delay rates;
-- monthly, day-of-week and departure-hour delay rates;
-- recorded delay-cause statistics;
-- route statistics; and
-- performance metadata.
-
-The PySpark job writes each table as a Spark CSV directory. The Pandas job
-writes one CSV file per table.
-
-## Verified AWS execution
-
-The full CSV was stored in Amazon S3. PySpark ran on Amazon EMR using one
-`m5.xlarge` primary node and two `m5.xlarge` core nodes. Pandas ran on one
-`r5.large` EC2 instance. Both implementations processed the same full file and
-all eight analytical output tables matched.
+Both implementations processed the same full CSV and produced matching values
+for all eight analytical output tables.
 
 | Engine | Run 1 | Run 2 | Run 3 | Median |
 |---|---:|---:|---:|---:|
 | PySpark on EMR | 96.31 s | 98.07 s | 99.24 s | 98.07 s |
 | Pandas on EC2 | 42.59 s | 41.06 s | 41.38 s | 41.38 s |
 
-Pandas was faster for this 1.31 GB dataset, but used approximately 8.26 GB of
-peak process memory and failed on the smaller `m5.large` configuration. The
-complete execution evidence is recorded in
-[docs/aws_execution_record.md](docs/aws_execution_record.md).
-
-## Report figures and writing guide
-
-After placing the downloaded AWS output folders under `results/aws/outputs`,
-generate the six report figures with:
-
-```powershell
-python src/create_result_charts.py
-```
-
-The figures are saved under [reports/figures/results](reports/figures/results).
-Copy-ready results, validation and comparison guidance is available in
-[docs/results_and_comparison_guide.md](docs/results_and_comparison_guide.md).
+The six final analytical charts are available in the [graphs](graphs) folder.

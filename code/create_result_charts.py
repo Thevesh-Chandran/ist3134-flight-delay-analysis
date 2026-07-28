@@ -41,13 +41,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input-root",
         type=Path,
-        default=Path("results/aws/outputs"),
+        default=Path("_local/results/aws/outputs"),
         help="Extracted AWS outputs directory",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("reports/figures/results"),
+        default=Path("graphs"),
         help="Destination for report-ready PNG figures",
     )
     parser.add_argument(

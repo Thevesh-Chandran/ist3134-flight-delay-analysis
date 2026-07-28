@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
+CODE_DIRECTORY = Path(__file__).resolve().parent
+sys.path.insert(0, str(CODE_DIRECTORY))
 
 from analysis_common import EXPECTED_COLUMNS
 from pandas_analysis import analyse, derive_departure_hour
