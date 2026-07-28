@@ -56,7 +56,7 @@ def parse_args() -> argparse.Namespace:
         default=10_000,
         help="Completed-flight threshold for the main airport ranking",
     )
-    parser.add_argument("--top-n", type=int, default=15)
+    parser.add_argument("--top-n", type=int, default=10)
     return parser.parse_args()
 
 
@@ -378,14 +378,13 @@ def chart_routes(df: pd.DataFrame, path: Path, top_n: int) -> None:
     )
     ax.set_xlabel("Average arrival delay (minutes)")
     ax.set_ylabel("Origin–destination route")
-    ax.set_xlim(0, ranked["average_arrival_delay_minutes"].max() * 1.48)
+    ax.set_xlim(0, ranked["average_arrival_delay_minutes"].max() * 1.18)
     clean_axis(ax)
     for bar, (_, row) in zip(bars, ranked.iterrows()):
         ax.text(
             bar.get_width() + 1,
             bar.get_y() + bar.get_height() / 2,
-            f"{row.average_arrival_delay_minutes:.1f} min  ·  "
-            f"{row.delay_rate_pct:.1f}% delayed  ·  {int(row.completed_flights)} flights",
+            f"{row.average_arrival_delay_minutes:.1f} min",
             va="center",
             fontsize=8.5,
         )

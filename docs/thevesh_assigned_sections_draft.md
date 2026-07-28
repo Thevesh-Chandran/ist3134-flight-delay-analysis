@@ -144,6 +144,11 @@ EMR. The full Pandas and PySpark outputs were then compared table by table using
 the project’s comparison script. All eight tables matched, including group
 names, row counts and numerical values within the comparison tolerance.
 
+Table 4.1 summarises the tests carried out on the sample and full dataset,
+including the one failed memory test that was retained as evidence.
+
+**Table 4.1: Summary of implementation and validation tests**
+
 | Test | Expected result | Actual result | Status |
 |---|---|---|---|
 | Full and sample headers | Same 35 columns in the same order | Headers matched | Pass |
@@ -172,6 +177,12 @@ was `s-09486673NIIHTI0COSUC`, followed by
 `s-08088801PSKG5HYAKUMY` and `s-0621580HOAVXWHI3WUN` for the second and third
 runs. The step names were `flight-delay-full-run-1`,
 `flight-delay-full-run-2` and `flight-delay-full-run-3`.
+
+Table 4.2 records the AWS resources, software versions and output locations used
+for the final executions. These details make the implementation easier to
+repeat under a similar environment.
+
+**Table 4.2: Recorded AWS and software configuration**
 
 | Item | Recorded configuration |
 |---|---|
@@ -212,6 +223,12 @@ excluded from the arrival-delay denominator because they did not represent
 ordinary completed arrivals. This left 6,965,267 completed flights for the main
 analysis.
 
+Table 5.1 shows how the raw dataset was reduced to the completed-flight
+population used for the analysis. It also presents the number and percentage of
+completed flights classified as delayed.
+
+**Table 5.1: Overall flight-record and delay summary**
+
 | Measure | Count |
 |---|---:|
 | Total records | 7,079,081 |
@@ -247,6 +264,11 @@ highest rate at 28.74%, followed by AA at 26.13% and B6 at 25.51%. At the lower
 end, YX recorded 14.07%, HA 15.45% and 9E 15.83%. The difference between F9 and
 YX was 14.67 percentage points.
 
+Table 5.2 lists selected carriers from the highest and lower ends of the
+ranking, together with the flight counts behind each rate.
+
+**Table 5.2: Selected operating carriers ranked by delay rate**
+
 | Carrier | Completed flights | Delayed flights | Delay rate |
 |---|---:|---:|---:|
 | F9 | 203,482 | 58,481 | 28.74% |
@@ -258,7 +280,13 @@ YX was 14.67 percentage points.
 | HA | 77,633 | 11,998 | 15.45% |
 | YX | 295,306 | 41,554 | 14.07% |
 
-**Insert Figure 5.1 here:** Arrival delay rate by operating carrier.
+Figure 5.1 shows the delay rates for all 15 operating carriers. The chart makes
+the difference between the highest- and lowest-ranked carriers easier to see,
+while Table 5.2 provides the exact counts for selected carriers.
+
+**Insert Figure 5.1 here**
+
+**Figure 5.1: Arrival delay rate by operating carrier.**
 
 Flight volume helps explain why the percentages should not be read alone. For
 example, F9 had the highest rate but 203,482 completed flights, whereas AA had a
@@ -279,6 +307,12 @@ main report, origin airports were therefore required to have at least 10,000
 completed flights. This threshold retained 101 airports and 91.8% of all
 completed flights.
 
+Table 5.3 presents the ten highest delay rates after applying the
+10,000-completed-flight threshold.
+
+**Table 5.3: Origin airports with the highest delay rates among airports with
+at least 10,000 completed flights**
+
 | Origin airport | Completed flights | Delayed flights | Delay rate |
 |---|---:|---:|---:|
 | MIA | 107,722 | 29,981 | 27.83% |
@@ -292,8 +326,14 @@ completed flights.
 | ORD | 275,505 | 65,275 | 23.69% |
 | AVL | 11,654 | 2,758 | 23.67% |
 
-**Insert Figure 5.2 here:** Origin airports with the highest delay rates among
-airports with at least 10,000 completed flights.
+Figure 5.2 displays the same airport ranking visually. It shows that the top
+four qualifying airports had relatively similar delay rates, although their
+flight volumes differed considerably.
+
+**Insert Figure 5.2 here**
+
+**Figure 5.2: Origin airports with the highest delay rates among airports with
+at least 10,000 completed flights.**
 
 MIA had the highest delay rate within the selected high-volume group at 27.83%.
 DFW and CLT followed closely. DFW handled almost three times as many completed
@@ -340,8 +380,15 @@ periods had much smaller denominators than the main daytime hours, which often
 contained more than 400,000 flights. A high overnight rate is therefore not
 equivalent to the largest number of affected passengers or flights.
 
-**Insert Figure 5.3 here:** Monthly, day-of-week and departure-hour delay
-patterns. The three panels allow the time results to be shown as one figure.
+Figure 5.3 brings the three time-based analyses together. The monthly panel
+shows the mid-year increase, the weekday panel shows the relatively smaller
+variation across the week, and the hourly panel shows how delay rates generally
+rose later in the day. The hourly values should still be read alongside flight
+volume because overnight hours contained fewer flights.
+
+**Insert Figure 5.3 here**
+
+**Figure 5.3: Delay rates by month, day of week and departure hour.**
 
 ## 5.4 Recorded Delay Causes
 
@@ -351,6 +398,12 @@ minutes in total. Late-aircraft delay contributed the largest share, with
 or 34.51%. Together, these two categories represented 74.95% of all recorded
 cause minutes.
 
+Table 5.4 compares the five recorded causes using total minutes, affected
+flights, percentage share and average minutes. Figure 5.4 then shows the two
+main measures visually.
+
+**Table 5.4: Recorded delay-cause statistics**
+
 | Recorded cause | Total minutes | Affected flights | Share of cause minutes | Average minutes per affected flight |
 |---|---:|---:|---:|---:|
 | Late aircraft | 41,974,007 | 743,215 | 40.44% | 56.48 |
@@ -359,8 +412,14 @@ cause minutes.
 | Weather | 6,195,873 | 88,905 | 5.97% | 69.69 |
 | Security | 179,928 | 7,406 | 0.17% | 24.29 |
 
-**Insert Figure 5.4 here:** Share of attributed cause minutes and number of
-affected completed flights.
+Figure 5.4 shows that late-aircraft and carrier delay dominated the share of
+recorded cause minutes. It also highlights that the cause with the most minutes
+was not the same as the cause affecting the most flights.
+
+**Insert Figure 5.4 here**
+
+**Figure 5.4: Share of attributed cause minutes and number of affected
+completed flights.**
 
 Carrier delay affected the largest number of flights, while late-aircraft delay
 produced the largest total number of minutes. Weather affected fewer flights,
@@ -381,6 +440,13 @@ routes with at least 100 completed flights were included in the main ranking.
 This removed extremely small routes whose averages could be dominated by a few
 records.
 
+Table 5.5 reports the top ten qualifying routes and keeps average delay, delay
+rate and flight volume together so that the ranking is not judged from one
+measure alone.
+
+**Table 5.5: Routes with the longest average arrival delays, with at least 100
+completed flights**
+
 | Origin | Destination | Completed flights | Average arrival delay | Delay rate |
 |---|---|---:|---:|---:|
 | RDM | DFW | 128 | 87.43 minutes | 49.22% |
@@ -394,8 +460,14 @@ records.
 | ANC | ATL | 105 | 56.11 minutes | 60.00% |
 | MSO | LAS | 116 | 55.47 minutes | 31.90% |
 
-**Insert Figure 5.5 here:** Domestic routes with the longest average arrival
-delays among routes with at least 100 completed flights.
+Figure 5.5 visualises the average delay for the same ten routes. The figure
+makes the unusually high RDM–DFW value clear, while Table 5.5 supplies the
+volume and delay-rate context needed to interpret it.
+
+**Insert Figure 5.5 here**
+
+**Figure 5.5: Domestic routes with the longest average arrival delays among
+routes with at least 100 completed flights.**
 
 RDM–DFW had the highest average arrival delay at 87.43 minutes. The reverse
 route, DFW–RDM, also appeared in the top four at 62.96 minutes. EGE–MIA had the
@@ -423,13 +495,24 @@ one `m5.xlarge` primary node and two `m5.xlarge` core nodes. Pandas 2.3.3 and
 Python 3.9.25 ran on a single `r5.large` EC2 instance with 2 vCPUs,
 approximately 15 GiB usable memory and no swap.
 
+Table 6.1 reports all three internal runtime measurements and their medians.
+Figure 6.1 shows the same run-by-run comparison visually.
+
+**Table 6.1: Full-data PySpark and Pandas performance results**
+
 | Engine | Run 1 | Run 2 | Run 3 | Median | Peak memory |
 |---|---:|---:|---:|---:|---:|
 | PySpark on EMR | 96.31 s | 98.07 s | 99.24 s | 98.07 s | Not measured as one process; distributed across the cluster |
 | Pandas on EC2 | 42.59 s | 41.06 s | 41.38 s | 41.38 s | Approximately 8.26 GB |
 
-**Insert Figure 6.1 here:** Internal processing runtime for the three full-data
-PySpark and Pandas runs.
+Figure 6.1 shows that Pandas was faster in each of the three measured runs on
+this dataset. The chart only compares internal processing time; it does not
+include cluster creation, instance launch or S3 transfer time.
+
+**Insert Figure 6.1 here**
+
+**Figure 6.1: Internal processing runtime for three full-data PySpark and
+Pandas runs.**
 
 Pandas completed the current workload faster. Its median runtime was 41.38
 seconds compared with 98.07 seconds for PySpark. Pandas used about 42% of the
@@ -479,10 +562,30 @@ approximately USD 0.08–0.10, including the failed `m5.large` period, the
 successful `r5.large` period and small supporting charges. Initial S3 storage
 was approximately USD 0.03 per month.
 
-These values are estimates based on recorded runtime and instance
-configurations. They do not represent the learner-lab credit display exactly,
-because that display may include earlier classroom resources and may update
-after a delay.
+Table 6.2 summarises the estimated component costs and the change observed in
+the AWS Academy Learner Lab credit. Before the project’s main AWS processing
+work, the dashboard showed USD 21.00 used. When it was checked again on 28 July
+2026, it showed USD 21.80 used. The observed increase was therefore USD 0.80.
+
+**Table 6.2: Estimated AWS service costs and observed Learner Lab credit usage**
+
+| Cost item | Basis | Approximate cost |
+|---|---|---:|
+| S3 storage | Approximately 1.31 GB of raw data plus small scripts and outputs | USD 0.03 per month |
+| EMR and supporting EC2 resources | One `m5.xlarge` primary and two `m5.xlarge` core nodes for approximately 28 minutes 34 seconds | USD 0.35 |
+| Pandas EC2 testing | Failed `m5.large` attempt and successful `r5.large` testing | USD 0.08–0.10 |
+| Calculated service estimate | Sum of the recorded project components above | USD 0.46–0.48 |
+| Learner Lab usage before main project processing | Dashboard credit display before the recorded AWS executions | USD 21.00 used |
+| Learner Lab usage after project processing | Dashboard credit display checked on 28 July 2026 | USD 21.80 used |
+| Observed Learner Lab increase | USD 21.80 minus USD 21.00 | **USD 0.80** |
+
+The calculated service estimate and observed credit usage should not be
+expected to match exactly. The Learner Lab display can include cluster startup
+and idle time, EBS volumes, public IPv4 addresses, logs, earlier classroom
+resources and charges that appear after a delay. It is also a credit summary
+rather than a detailed AWS invoice. For this reason, USD 0.80 is reported as an
+approximate observed total, while the individual rows remain configuration-
+based estimates.
 
 For small datasets, Pandas is the more practical choice because it has less
 setup and lower overhead. For the current 1.31 GB dataset, Pandas was also the
@@ -552,9 +655,13 @@ distributed processing becomes more efficient than a single machine.
 
 # Appendices
 
-## Appendix B: Important Code or Execution Commands
+## Appendix B: Important Execution Commands
 
-### B.1 PySpark Sample Run on EMR
+Only the main execution and validation commands are included here. The complete
+PySpark and Pandas source code, testing scripts and detailed execution
+instructions are available in the project’s GitHub repository.
+
+### B.1 PySpark Full-Data Run on EMR
 
 ```bash
 export AWS_REGION="us-east-1"
@@ -564,41 +671,10 @@ export CLUSTER_ID="<EMR_CLUSTER_ID>"
 aws emr add-steps \
   --cluster-id "$CLUSTER_ID" \
   --region "$AWS_REGION" \
-  --steps "Type=Spark,Name=flight-delay-sample-run-1,ActionOnFailure=CONTINUE,Args=[--deploy-mode,cluster,--master,yarn,--py-files,s3://$BUCKET/scripts/flight_analysis_lib.zip,s3://$BUCKET/scripts/pyspark_analysis.py,--input,s3://$BUCKET/data/sample/flight_data_2024_sample.csv,--output,s3://$BUCKET/outputs/pyspark/sample/run-1,--minimum-route-flights,1]"
-```
-
-### B.2 PySpark Full-Data Run on EMR
-
-```bash
-aws emr add-steps \
-  --cluster-id "$CLUSTER_ID" \
-  --region "$AWS_REGION" \
   --steps "Type=Spark,Name=flight-delay-full-run-1,ActionOnFailure=CONTINUE,Args=[--deploy-mode,cluster,--master,yarn,--py-files,s3://$BUCKET/scripts/flight_analysis_lib.zip,s3://$BUCKET/scripts/pyspark_analysis.py,--input,s3://$BUCKET/data/raw/flight_data_2024.csv,--output,s3://$BUCKET/outputs/pyspark/full/run-1,--minimum-route-flights,100]"
 ```
 
-### B.3 Check an EMR Step
-
-```bash
-aws emr describe-step \
-  --cluster-id "$CLUSTER_ID" \
-  --step-id "<STEP_ID>" \
-  --region "$AWS_REGION" \
-  --query "Step.[Name,Status.State,Status.StateChangeReason.Message,Status.Timeline.StartDateTime,Status.Timeline.EndDateTime]" \
-  --output table
-```
-
-### B.4 Download the Full Dataset to EC2
-
-```bash
-mkdir -p ~/flight-data
-
-aws s3 cp \
-  s3://ist3134-flight-delay-thevesh-2026/data/raw/flight_data_2024.csv \
-  ~/flight-data/flight_data_2024.csv \
-  --region us-east-1
-```
-
-### B.5 Run Pandas With Time and Memory Measurement
+### B.2 Pandas Full-Data Run With Time and Memory Measurement
 
 ```bash
 mkdir -p results/full/pandas/run-1
@@ -613,7 +689,7 @@ set -o pipefail
 echo "EXIT_STATUS=${PIPESTATUS[0]}"
 ```
 
-### B.6 Compare Pandas and PySpark Outputs
+### B.3 Compare Pandas and PySpark Outputs
 
 ```bash
 python src/compare_outputs.py \
@@ -621,21 +697,19 @@ python src/compare_outputs.py \
   --spark-output results/full/pyspark/run-1
 ```
 
-### B.7 Generate the Report Figures
+### B.4 GitHub Repository
 
-```powershell
-python src/create_result_charts.py
-```
-
-### B.8 GitHub Repository
-
-```text
-https://github.com/Thevesh-Chandran/ist3134-flight-delay-analysis
-```
+The full source code is available at:
+[IST3134 Flight Delay Analysis](https://github.com/Thevesh-Chandran/ist3134-flight-delay-analysis).
 
 ## Appendix C: Full Benchmark and Test Results
 
 ### C.1 PySpark Benchmarks
+
+Table C.1 provides the detailed internal and EMR step runtimes behind the
+PySpark median reported in Table 6.1.
+
+**Table C.1: Detailed PySpark benchmark results**
 
 | Run | Internal runtime | EMR step runtime | Input rows | Analysed rows | Status |
 |---|---:|---:|---:|---:|---|
@@ -647,6 +721,12 @@ https://github.com/Thevesh-Chandran/ist3134-flight-delay-analysis
 
 ### C.2 Pandas Benchmarks
 
+Table C.2 records the Pandas sample test, the failed `m5.large` attempt and the
+three successful `r5.large` runs. These results support the runtime and memory
+discussion in Sections 6.1 and 6.2.
+
+**Table C.2: Detailed Pandas benchmark results**
+
 | Run | Internal runtime | Wall-clock runtime | Peak process memory | Status |
 |---|---:|---:|---:|---|
 | Sample run | 0.1609 s | 0.50 s | 96,358,400 bytes | Success |
@@ -657,6 +737,11 @@ https://github.com/Thevesh-Chandran/ist3134-flight-delay-analysis
 | Full median | 41.3813 s | 41.70 s | 8,261,115,904 bytes | — |
 
 ### C.3 Full Output Agreement
+
+Table C.3 shows the row-count agreement for every output table generated by the
+two implementations. All eight comparisons returned a match.
+
+**Table C.3: Full-data output agreement between Pandas and PySpark**
 
 | Output table | Pandas rows | PySpark rows | Result |
 |---|---:|---:|---|
@@ -672,6 +757,11 @@ https://github.com/Thevesh-Chandran/ist3134-flight-delay-analysis
 Comparison exit status: 0. Matching tables: 8 of 8.
 
 ### C.4 Full-Data Quality Checks
+
+Table C.4 lists the main data-quality checks performed on the full dataset. The
+results confirm that no completed flight was missing its arrival-delay value.
+
+**Table C.4: Full-data quality-check results**
 
 | Check | Result |
 |---|---:|
@@ -694,6 +784,12 @@ Use the following screenshots from the private evidence folder. Crop or cover
 the AWS account number, user name, public IP address and any other unnecessary
 identifier before inserting them.
 
+Table D.1 lists the AWS screenshots that support the implementation and testing
+discussion. Each screenshot should be inserted under its stated figure number
+with the suggested caption.
+
+**Table D.1: AWS implementation screenshots and suggested captions**
+
 | Figure | Suggested caption | Evidence file |
 |---|---|---|
 | Figure D.1 | Amazon S3 project folder structure | `Phase 1 - S3/01-bucket-folders.png` |
@@ -706,5 +802,5 @@ identifier before inserting them.
 | Figure D.8 | Pandas full-data process terminated because the `m5.large` ran out of memory | `Phase 7 - Pandas Full Runs/02-m5-large-out-of-memory-failure.png` |
 | Figure D.9 | Successful Pandas full-data execution on the `r5.large` instance | `Phase 7 - Pandas Full Runs/04-r5-large-full-run-1-success.png` |
 | Figure D.10 | All eight full-data output tables matched between Pandas and PySpark | `Phase 8 - Full Output Agreement/02-eight-full-tables-match.png` |
-| Figure D.11 | EMR cluster terminated after processing | `Phase 6 - PySpark Full Runs/08-emr-cluster-terminated.png` |
+okay| Figure D.11 | EMR cluster terminated after processing | `Phase 6 - PySpark Full Runs/08-emr-cluster-terminated.png` |
 | Figure D.12 | Pandas EC2 instance terminated after testing | `Phase 7 - Pandas Full Runs/08-pandas-ec2-terminated.png` |
