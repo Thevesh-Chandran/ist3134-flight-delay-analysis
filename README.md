@@ -30,6 +30,19 @@ Delay rate (%) = delayed completed flights / completed flights * 100
 The dataset is not stored in GitHub. Download it from Kaggle and follow
 [data/README.md](data/README.md).
 
+## Assignment files provided
+
+The repository provides the materials requested in the assignment:
+
+- [src/pyspark_analysis.py](src/pyspark_analysis.py): main Spark implementation;
+- [src/pandas_analysis.py](src/pandas_analysis.py): non-big-data comparison;
+- [src/analysis_common.py](src/analysis_common.py): shared schema and analytical definitions;
+- [src/compare_outputs.py](src/compare_outputs.py): PySpark–Pandas output validation;
+- [tests/test_pandas_analysis.py](tests/test_pandas_analysis.py): automated logic tests;
+- [requirements-pyspark.txt](requirements-pyspark.txt) and
+  [requirements-pandas.txt](requirements-pandas.txt): required packages; and
+- the Kaggle dataset link and execution instructions in this README.
+
 ## Project structure
 
 ```text
@@ -37,11 +50,11 @@ The dataset is not stored in GitHub. Download it from Kaggle and follow
 |-- aws/                   AWS deployment notes and scripts
 |-- data/                  Local data locations (CSV files ignored by Git)
 |-- docs/                  Project documentation
-|-- outputs/               Report-guide documents
 |-- reports/
 |   |-- figures/           Final report charts
 |   `-- tables/            Final report tables
 |-- results/               Generated analytical outputs (ignored by Git)
+|-- requirements-*.txt     PySpark and Pandas dependencies
 |-- src/
 |   |-- analysis_common.py Shared schema and definitions
 |   |-- create_result_charts.py Report-ready figure generation
@@ -138,6 +151,3 @@ python src/create_result_charts.py
 The figures are saved under [reports/figures/results](reports/figures/results).
 Copy-ready results, validation and comparison guidance is available in
 [docs/results_and_comparison_guide.md](docs/results_and_comparison_guide.md).
-
-AWS account identifiers, credentials, the full dataset and raw AWS logs must
-never be committed.
